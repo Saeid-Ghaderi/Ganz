@@ -1,0 +1,9 @@
+﻿dotnet ef migrations add MyMigrationName --project MyApp.Data --startup-project ../Ganz.API
+dotnet ef migrations add InitialCreate
+Add-Migration MyMigrationName -Project MyApp.Data -StartupProject ../Ganz.API
+Add-Migration InitialCreate
+
+Update-Database
+dotnet ef database update 
+dotnet ef database update --project MyApp.Data --startup-project MyApp.Web
+Update-Database -Project MyApp.Data -StartupProject MyApp.Web

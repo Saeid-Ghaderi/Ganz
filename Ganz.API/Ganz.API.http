@@ -1,0 +1,6 @@
+@Ganz.API_HostAddress = http://localhost:5152
+
+GET {{Ganz.API_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
