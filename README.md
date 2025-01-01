@@ -1,4 +1,4 @@
-# Domain Driven Design(DDD) and Clean Architecture with ASP.NET Core and C# - Microservice approach
+# Domain Driven Design - Clean Architecture with ASP.NET Core and C# - Microservice approach
 
 ## 🚀 Overview
 This project is built on the principles of **Clean Architecture** with a **Domain-Driven Design (DDD)** approach. It is specifically designed to support **microservices** development, providing a robust and scalable structure for modern distributed systems.
