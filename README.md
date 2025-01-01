@@ -30,7 +30,3 @@ The solution follows the **Clean Architecture** structure:
 
 ### 4. <span style="color: #3F51B5;">Presentation Layer</span>
    - Provides entry points such as **APIs** or **UI interfaces**.
-
----
-
-## <span style="color: #FFC107;">Diagram</span>
