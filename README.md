@@ -17,23 +17,20 @@ This project is built on the principles of **Clean Architecture** with a **Domai
 
 The solution follows the **Clean Architecture** structure:
 
-### 1. **Domain Layer**
+### 1. <span style="color: #3F51B5;">Domain Layer</span>
    - Contains the **core business logic** and **entities**.
    - Free of **external dependencies**.
 
-### 2. **Application Layer**
+### 2. <span style="color: #3F51B5;">Application Layer</span>
    - Includes **use cases** and **application logic**.
    - Interacts with the **domain layer**.
 
-### 3. **Infrastructure Layer**
+### 3. <span style="color: #3F51B5;">Infrastructure Layer</span>
    - Handles **external concerns** like **databases**, **APIs**, and **message brokers**.
 
-### 4. **Presentation Layer**
+### 4. <span style="color: #3F51B5;">Presentation Layer</span>
    - Provides entry points such as **APIs** or **UI interfaces**.
 
 ---
 
 ## <span style="color: #FFC107;">Diagram</span>
-
-Here’s a quick visual representation of the layers:
-
