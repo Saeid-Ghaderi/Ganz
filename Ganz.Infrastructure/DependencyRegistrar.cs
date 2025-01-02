@@ -45,6 +45,8 @@ namespace Ganz.Infrastructure
             services.AddSingleton<EncryptionUtility>();
             services.Configure<Configs>(configuration.GetSection("Configs"));
 
+            services.AddGrpc();
+
 
             var config = new AutoMapper.MapperConfiguration(options =>
             {

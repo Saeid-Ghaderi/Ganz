@@ -28,6 +28,15 @@
 	</ItemGroup>
 
 	<ItemGroup>
+		<PackageReference Include="Grpc.AspNetCore" Version="2.46.0" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<Protobuf Include="gRPC\smsclient.proto" GrpcServices="Client" />
+	</ItemGroup>
+	
+
+	<ItemGroup>
 		<ProjectReference Include="..\Ganz.Application\Ganz.Application.csproj" />
 		<ProjectReference Include="..\Ganz.Domain\Ganz.Domain.csproj" />
 		<ProjectReference Include="..\Ganz.Infrastructure\Ganz.Infrastructure.csproj" />

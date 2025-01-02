@@ -1,6 +1,7 @@
 ﻿using Ganz.API;
 using Ganz.API.CustomMiddlewares;
 using Ganz.Application.CQRS.ProductCommandQuery.Query;
+using Ganz.Application.Services.SMS_gRPC;
 using Ganz.Infrastructure;
 using MediatR;
 using Microsoft.Extensions.FileProviders;
@@ -44,13 +45,22 @@ app.UseStaticFiles(new StaticFileOptions
     RequestPath = "/Media"
 });
 
+
+app.UseRouting();
 //call CustomMiddleware
 app.UseLoggingMiddleware();
 
 app.UseAuthentication();
 app.UseAuthorization();
 
+app.UseEndpoints(endpoints =>
+{
+    endpoints.MapGrpcService<SMSService>();
+});
+
 app.MapControllers();
+
+
 
 app.Run();
 
