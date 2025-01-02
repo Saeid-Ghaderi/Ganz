@@ -46,13 +46,13 @@ namespace Ganz.API
                 c.SwaggerDoc("v1", new OpenApiInfo
                 {
                     Version = "v1",
-                    Title = "My App API",
-                    Description = "My App API - Version01",
-                    TermsOfService = new Uri("https://devtube.ir/"),
+                    Title = "Ganz API",
+                    Description = "Ganz API - Version01",
+                    TermsOfService = new Uri("https://GANZ.com/"),
                     License = new OpenApiLicense
                     {
-                        Name = "DevTube",
-                        Url = new Uri("https://devtube.ir/"),
+                        Name = "GANZ",
+                        Url = new Uri("https://GANZ.com/"),
                     }
                 });
 
