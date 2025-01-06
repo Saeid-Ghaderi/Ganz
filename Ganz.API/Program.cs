@@ -4,6 +4,7 @@ using Ganz.Application.CQRS.ProductCommandQuery.Query;
 using Ganz.Application.Services.SMS_gRPC;
 using Ganz.Infrastructure;
 using MediatR;
+using Microsoft.AspNetCore.Server.Kestrel.Core;
 using Microsoft.Extensions.FileProviders;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -25,7 +26,25 @@ builder.Services.AddMemoryCache();
 
 builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssemblyContaining(typeof(GetProductQuery)));
 
+
+//builder.WebHost.ConfigureKestrel(options =>
+//{
+//    options.ListenAnyIP(5000, listenOptions =>
+//    {
+//        listenOptions.Protocols = HttpProtocols.Http1AndHttp2;
+//    });
+
+//    options.ListenAnyIP(5001, listenOptions =>
+//    {
+//        listenOptions.UseHttps();
+//        listenOptions.Protocols = HttpProtocols.Http1AndHttp2;
+//    });
+//});
+
 var app = builder.Build();
+
+//app.Urls.Add("http://0.0.0.0:5000");
+//app.Urls.Add("https://0.0.0.0:5001");
 
 
 

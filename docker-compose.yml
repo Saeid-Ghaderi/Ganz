@@ -1,0 +1,28 @@
+version: '3.8'
+
+networks:
+    myAppNetwork:        
+
+services:
+    SqlServerDb:
+        container_name: SqlServerGanzContainer
+        image: mcr.microsoft.com/mssql/server:2019-latest
+        ports:
+            - 1433:1433
+        environment:
+            - ACCEPT_EULA=Y
+            - MSSQL_SA_PASSWORD=myStong_Password123#
+    ganz.api:
+        container_name: WebApiGanzContainer
+        image: ${DOCKER_REGISTRY-}ganzapi
+        ports:
+            - "5000:5000"
+            - "5001:5001"
+        volumes:
+            - ./Media:/app/Media
+        build:
+          context: .
+          dockerfile: Ganz.API/Dockerfile
+        depends_on:
+            - SqlServerDb
+
