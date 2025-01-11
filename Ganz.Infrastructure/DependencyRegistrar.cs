@@ -3,13 +3,16 @@ using Ganz.Application.Interfaces;
 using Ganz.Application.Interfaces.Catalogs.Features;
 using Ganz.Application.Services;
 using Ganz.Application.Services.Catalogs.Features;
+using Ganz.Application.Services.Elastic;
 using Ganz.Application.Utilities;
 using Ganz.Application.Validators;
 using Ganz.Domain;
 using Ganz.Domain.Catalogs.Features;
 using Ganz.Domain.Contracts;
+using Ganz.Domain.Elastic;
 using Ganz.Infrastructure.Persistence;
 using Ganz.Infrastructure.Persistence.Catalogs.Features;
+using Ganz.Infrastructure.Persistence.Elastic;
 using Ganz.Infrastructure.Utilities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -37,9 +40,14 @@ namespace Ganz.Infrastructure
             services.AddScoped<IPermissionService, PermissionService>();
             services.AddScoped<IFeatureService, FeatureService>();
             services.AddScoped<IFeatureRepository, FeatureRepository>();
-            
+
+            services.AddScoped<ProductElasticService>();
+            services.AddScoped(typeof(IElasticSearchRepository<>), typeof(ElasticSearchRepository<>));
+
             services.AddHttpContextAccessor();
             services.AddScoped<IMyFileUtility, MyFileUtility>();
+
+            //services.AddScoped(typeof(IElasticSearchRepository<>), typeof(ElasticSearchRepository<>));
 
 
             services.AddSingleton<EncryptionUtility>();

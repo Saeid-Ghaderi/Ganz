@@ -1,11 +1,16 @@
 ﻿using Ganz.API;
 using Ganz.API.CustomMiddlewares;
+using Ganz.API.General;
 using Ganz.Application.CQRS.ProductCommandQuery.Query;
+using Ganz.Application.Services.Elastic;
 using Ganz.Application.Services.SMS_gRPC;
+using Ganz.Domain.Elastic;
 using Ganz.Infrastructure;
+using Ganz.Infrastructure.Persistence.Elastic;
 using MediatR;
-using Microsoft.AspNetCore.Server.Kestrel.Core;
 using Microsoft.Extensions.FileProviders;
+using Microsoft.Extensions.Options;
+using Nest;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -24,7 +29,21 @@ builder.Services.AddSwagger();
 builder.Services.AddJWT();
 builder.Services.AddMemoryCache();
 
+
 builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssemblyContaining(typeof(GetProductQuery)));
+
+builder.Services.Configure<ElasticSearchSettings>(
+    builder.Configuration.GetSection("ElasticSearch"));
+
+builder.Services.AddSingleton<IElasticClient>(sp =>
+{
+    var settings = sp.GetRequiredService<IOptions<ElasticSearchSettings>>().Value;
+
+    var connectionSettings = new ConnectionSettings(new Uri(settings.Url))
+        .DefaultIndex(settings.DefaultIndex);
+
+    return new ElasticClient(connectionSettings);
+});
 
 
 //builder.WebHost.ConfigureKestrel(options =>
@@ -63,7 +82,6 @@ app.UseStaticFiles(new StaticFileOptions
            Path.Combine(builder.Environment.ContentRootPath, "Media")),
     RequestPath = "/Media"
 });
-
 
 app.UseRouting();
 //call CustomMiddleware
