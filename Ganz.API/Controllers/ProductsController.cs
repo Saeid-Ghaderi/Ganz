@@ -2,6 +2,7 @@
 using Ganz.API.General;
 using Ganz.Application.Dtos;
 using Ganz.Application.Interfaces;
+using Ganz.Application.Services;
 using Ganz.Domain.Pagination;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -117,6 +118,44 @@ namespace Ganz.API.Controllers
             }
             return NotFound();
         }
+
+
+
+        [HttpPut]
+        public async Task UpdateProduct([FromBody] ProductRequestDTO product)
+        {
+            await _productService.UpdateProductAsync(product);
+        }
+
+
+        [HttpPatch("PatchProductAsync/{id}")]
+        public async Task<IActionResult> PatchProductAsync(int id, [FromBody] Dictionary<string, object> updates)
+        {
+            if (updates == null || !updates.Any())
+            {
+                return BadRequest("Updates cannot be null or empty.");
+            }
+
+            try
+            {
+                await _productService.PatchProductAsync(id, updates);
+                return NoContent();
+            }
+            catch (KeyNotFoundException)
+            {
+                return NotFound($"Product with ID {id} not found.");
+            }
+            catch (InvalidOperationException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
+        }
+
+
 
         [HttpPost("upload")]
         [AllowAnonymous]

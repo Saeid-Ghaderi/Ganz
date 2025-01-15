@@ -48,12 +48,22 @@ namespace Ganz.Application.Services
             throw new NotImplementedException();
         }
 
+        public Task PatchProductAsync(int id, Dictionary<string, object> updates)
+        {
+            throw new NotImplementedException();
+        }
+
         public Task<bool> RemoveProductAsync(int id)
         {
             throw new NotImplementedException();
         }
 
         public Task UpdateAsync(ProductRequestDTO product)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task UpdateProductAsync(ProductRequestDTO productrequest)
         {
             throw new NotImplementedException();
         }

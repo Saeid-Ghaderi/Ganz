@@ -99,6 +99,21 @@ namespace Ganz.Application.Services
             await _productRepository.InsertAsync(product);
         }
 
+        public async Task<bool> RemoveProductAsync(int productId)
+        {
+            var product = await _productRepository.GetByIdAsync(productId);
+            if (product == null)
+            {
+                return false;
+            }
+
+            await _productRepository.DeleteAsync(productId);
+            return true;
+        }
+
+
+
+        //In Entity
         public async Task PatchAsync(int id, Dictionary<string, object> updates)
         {
             var product = await _productRepository.GetByIdAsync(id);
@@ -127,16 +142,38 @@ namespace Ganz.Application.Services
             await _productRepository.UpdateAsync(product);
         }
 
-        public async Task<bool> RemoveProductAsync(int productId)
-        {
-            var product = await _productRepository.GetByIdAsync(productId);
-            if (product == null)
-            {
-                return false;
-            }
 
-            await _productRepository.DeleteAsync(productId);
-            return true;
+
+
+        //In Repository
+        public async Task UpdateProductAsync(ProductRequestDTO productrequest)
+        {
+            var product = _mapper.Map<Product>(productrequest);
+            await _productRepository.UpdateProductAsync(product);
+        }
+
+        public async Task PatchProductAsync(int id, Dictionary<string, object> updates)
+        {
+            if (updates == null || !updates.Any())
+            {
+                throw new ArgumentException("Updates cannot be null or empty.", nameof(updates));
+            }
+            try
+            {
+                await _productRepository.PatchProductAsync(id, updates);
+            }
+            catch (ArgumentNullException ex)
+            {
+                throw new KeyNotFoundException($"Product with ID {id} was not found.", ex);
+            }
+            catch (ArgumentException ex)
+            {
+                throw new InvalidOperationException($"Failed to update product: {ex.Message}", ex);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("An unexpected error occurred while patching the product.", ex);
+            }
         }
     }
 }

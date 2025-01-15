@@ -12,5 +12,9 @@ namespace Ganz.Domain.Contracts
         Task UpdateAsync(Product product); // PUT
         Task PatchAsync(int id, Dictionary<string, object> updates); // PATCH
         Task DeleteAsync(int id);
+
+        Task PatchProductAsync(int id, Dictionary<string, object> updates);
+        Task UpdateProductAsync(Product product);
+
     }
 }

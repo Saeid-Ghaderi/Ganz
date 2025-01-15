@@ -11,5 +11,8 @@ namespace Ganz.Application.Interfaces
         Task UpdateAsync(ProductRequestDTO product);
         Task PatchAsync(int id, Dictionary<string, object> updates);
         Task<bool> RemoveProductAsync(int id);
+
+        Task UpdateProductAsync(ProductRequestDTO productrequest);
+        Task PatchProductAsync(int id, Dictionary<string, object> updates);
     }
 }
