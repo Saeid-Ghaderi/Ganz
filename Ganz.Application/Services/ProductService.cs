@@ -31,6 +31,11 @@ namespace Ganz.Application.Services
             _productRepository = productRepository;
         }
 
+        public ProductService(IProductRepository productRepository, IMapper mapper) : this(productRepository)
+        {
+            _mapper = mapper;
+        }
+
         public async Task<PaginationResponse<ProductResponseDTO>> GetProductsAsync(PaginationRequest paginationRequest)
         {
 

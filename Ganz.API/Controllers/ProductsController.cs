@@ -17,12 +17,18 @@ namespace Ganz.API.Controllers
         private readonly IProductService _productService;
         private readonly IWebHostEnvironment _environment;
         private readonly IConfiguration _configuration;
+        private IProductService _mockobject;
 
         public ProductsController(IProductService productService, IWebHostEnvironment environment, IConfiguration configuration)
         {
             _productService = productService;
             _environment = environment;
             _configuration = configuration;
+        }
+
+        public ProductsController(IProductService mockobject)
+        {
+            _mockobject = mockobject;
         }
 
         [HttpPost("CreateProduct")]
@@ -54,6 +60,17 @@ namespace Ganz.API.Controllers
             var result = await _productService.GetProductsAsync(paginationRequest);
             return Ok(ApiResponse<PaginationResponse<ProductResponseDTO>>.Success(200,result));
             //return Ok(result);
+        }
+
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetProductById(int id)
+        {
+            var product = await _productService.GetByIdAsync(id);
+            if (product == null)
+            {
+                return NotFound();
+            }
+            return Ok(product);
         }
 
         [AllowAnonymous]

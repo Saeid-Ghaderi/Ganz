@@ -6,12 +6,12 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Ganz.IntegrationTests.Repositories;
 
-public class ProductRepositoryTests
+public class ProductRepositoryIntegrationTests
 {
     private readonly ApplicationDBContext _context;
     private readonly ProductRepository _productRepository;
 
-    public ProductRepositoryTests()
+    public ProductRepositoryIntegrationTests()
     {
         var options = new DbContextOptionsBuilder<ApplicationDBContext>()
             .UseInMemoryDatabase(databaseName: "TestDatabase")

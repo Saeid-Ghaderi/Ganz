@@ -6,11 +6,11 @@
         public string Name { get;  set; }
         public decimal Price { get;  set; }
         public string Description { get;  set; }
-        public bool IsActive { get;  set; }
-        public byte[] Thumbnail { get; set; }
-        public string ThumbnailFileName { get; set; }
-        public long ThumbnailFileSize { get; set; }
-        public string ThumbnailFileExtenstion { get; set; }
+        public bool IsActive { get; set; } = true;
+        public byte[] Thumbnail { get; set; } = Array.Empty<byte>();
+        public string? ThumbnailFileName { get; set; } = "";
+        public long ThumbnailFileSize { get; set; } = 0;
+        public string? ThumbnailFileExtenstion { get; set; } = "";
 
         public Product()
         {

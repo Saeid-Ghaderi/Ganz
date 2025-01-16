@@ -7,12 +7,12 @@ using Shouldly;
 
 namespace Ganz.UnitTests.Services;
 
-public class ProductServiceTests
+public class ProductServiceUnitTests
 {
     private readonly Mock<IProductRepository> _mockProductRepository;
     private readonly ProductService _productService;
 
-    public ProductServiceTests()
+    public ProductServiceUnitTests()
     {
         _mockProductRepository = new Mock<IProductRepository>();
         _productService = new ProductService(_mockProductRepository.Object);

@@ -14,12 +14,12 @@ using System.Security.Claims;
 
 namespace Ganz.IntegrationTests.Controllers
 {
-    public class ProductsControllerTests : IClassFixture<WebApplicationFactory<Program>>
+    public class ProductsControllerIntegrationTests : IClassFixture<WebApplicationFactory<Program>>
     {
         private readonly HttpClient _client;
         private bool IsAuthorized = true;
 
-        public ProductsControllerTests(WebApplicationFactory<Program> factory)
+        public ProductsControllerIntegrationTests(WebApplicationFactory<Program> factory)
         {
             var customFactory = factory.WithWebHostBuilder(builder =>
             {
