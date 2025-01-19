@@ -4,10 +4,12 @@ using Ganz.API.General;
 using Ganz.Application.CQRS.ProductCommandQuery.Query;
 using Ganz.Application.Services.Elastic;
 using Ganz.Application.Services.SMS_gRPC;
+using Ganz.Domain;
 using Ganz.Domain.Elastic;
 using Ganz.Infrastructure;
 using Ganz.Infrastructure.Persistence.Elastic;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Options;
 using Nest;
@@ -28,6 +30,16 @@ DependencyRegistrar.RegisterServices(builder.Services, builder.Configuration);
 builder.Services.AddSwagger();
 builder.Services.AddJWT();
 builder.Services.AddMemoryCache();
+
+if (builder.Environment.IsDevelopment())
+{
+    builder.Configuration.AddUserSecrets<Program>();
+}
+
+var connectionString = builder.Configuration.GetConnectionString("SqlConnection");
+
+builder.Services.AddDbContext<ApplicationDBContext>(options =>
+    options.UseSqlServer(connectionString));
 
 
 builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssemblyContaining(typeof(GetProductQuery)));

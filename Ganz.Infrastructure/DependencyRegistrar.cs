@@ -24,12 +24,12 @@ namespace Ganz.Infrastructure
     {
         public static void RegisterServices(this IServiceCollection services, IConfiguration configuration)
         {
-            string connectionstring = configuration.GetConnectionString("SqlConnection")!;
+            //string connectionstring = configuration.GetConnectionString("SqlConnection")!;
 
-            services.AddDbContext<ApplicationDBContext>(options =>
-            {
-                options.UseSqlServer(connectionstring);
-            });
+            //services.AddDbContext<ApplicationDBContext>(options =>
+            //{
+            //    options.UseSqlServer(connectionstring);
+            //});
 
             services.AddScoped<IProductRepository, ProductRepository>();
             services.AddScoped<IProductService, ProductService>();
