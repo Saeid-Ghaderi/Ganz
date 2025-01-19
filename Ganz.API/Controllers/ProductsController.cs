@@ -7,6 +7,7 @@ using Ganz.Domain.Pagination;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.Annotations;
+using System;
 using System.Security.Cryptography;
 
 namespace Ganz.API.Controllers
@@ -17,7 +18,6 @@ namespace Ganz.API.Controllers
         private readonly IProductService _productService;
         private readonly IWebHostEnvironment _environment;
         private readonly IConfiguration _configuration;
-        private IProductService _mockobject;
 
         public ProductsController(IProductService productService, IWebHostEnvironment environment, IConfiguration configuration)
         {
@@ -26,10 +26,10 @@ namespace Ganz.API.Controllers
             _configuration = configuration;
         }
 
-        public ProductsController(IProductService mockobject)
-        {
-            _mockobject = mockobject;
-        }
+        //public ProductsController(IProductService productService)
+        //{
+        //    _productService = productService;
+        //}
 
         [HttpPost("CreateProduct")]
         [SwaggerOperation(
@@ -65,7 +65,7 @@ namespace Ganz.API.Controllers
         [HttpGet("{id}")]
         public async Task<IActionResult> GetProductById(int id)
         {
-            var product = await _productService.GetByIdAsync(id);
+            var product = await _productService.GetProductByIdAsync(id);
             if (product == null)
             {
                 return NotFound();

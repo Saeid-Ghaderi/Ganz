@@ -1,9 +1,11 @@
-﻿using Ganz.API.General;
+﻿using Castle.Core.Configuration;
+using Ganz.API.General;
 using Ganz.Application.Dtos;
 using Ganz.Application.Interfaces;
 using Ganz.Domain.Pagination;
 using Ganz.IntegrationTests.TestUtilities;
 using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.Extensions.DependencyInjection;
@@ -17,7 +19,6 @@ namespace Ganz.IntegrationTests.Controllers
     public class ProductsControllerIntegrationTests : IClassFixture<WebApplicationFactory<Program>>
     {
         private readonly HttpClient _client;
-        private bool IsAuthorized = true;
 
         public ProductsControllerIntegrationTests(WebApplicationFactory<Program> factory)
         {
@@ -35,11 +36,9 @@ namespace Ganz.IntegrationTests.Controllers
 
                     var permissionServiceMock = new Mock<IPermissionService>();
                     permissionServiceMock.Setup(p => p.CheckPermission(It.IsAny<Guid>(), "get-product"))
-                        .ReturnsAsync(IsAuthorized);
+                        .ReturnsAsync(true);
 
                     services.AddSingleton(permissionServiceMock.Object);
-
-                    //services.AddScoped<IPermissionService, PermissionService>();
 
                 });
             });
@@ -52,23 +51,7 @@ namespace Ganz.IntegrationTests.Controllers
         {
             // Arrange
             var paginationRequest = new PaginationRequest { PageNumber = 1, PageSize = 1 };
-            var queryString = $"?Page={paginationRequest.PageNumber}&PageSize={paginationRequest.PageSize}";
-
-            //var claims = new[]
-            //{
-            //    new Claim(ClaimTypes.Name, "TestUser"),
-            //    new Claim(ClaimTypes.NameIdentifier, Guid.NewGuid().ToString()),
-            //    new Claim("userId", Guid.NewGuid().ToString()),
-            //    new Claim("Permission", "get-product")
-            //};
-
-            //var identity = new ClaimsIdentity(claims, "Test");
-            //var principal = new ClaimsPrincipal(identity);
-
-
-            //var httpContext = new DefaultHttpContext();
-            //httpContext.User = principal;
-
+            var queryString = $"?PageNumber={paginationRequest.PageNumber}&PageSize={paginationRequest.PageSize}";
 
             _client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Test");
 
@@ -86,30 +69,16 @@ namespace Ganz.IntegrationTests.Controllers
         [Fact]
         public async Task GetProducts_ShouldReturnForbidden_WhenUserDoesNotHavePermission()
         {
-            IsAuthorized = false;
             // Arrange
             var paginationRequest = new PaginationRequest { PageNumber = 1, PageSize = 1 };
-            var queryString = $"?Page={paginationRequest.PageNumber}&PageSize={paginationRequest.PageSize}";
+            var queryString = $"?PageNumber={paginationRequest.PageNumber}&PageSize={paginationRequest.PageSize}";
 
             TestAuthHandler.OverrideClaims = new[]
             {
-                new Claim(ClaimTypes.Name, "UnauthorizedUser") // بدون userId یا Permission
+                new Claim(ClaimTypes.Name, "UnauthorizedUser")
             };
 
-            //var claims = new[]
-            //{
-            //    new Claim(ClaimTypes.Name, "TestUser"),
-            //    new Claim(ClaimTypes.NameIdentifier, Guid.NewGuid().ToString()),
-            //    new Claim("userId", Guid.NewGuid().ToString()),
-            //    //new Claim("Permission", "get-product")
-            //};
-            //var identity = new ClaimsIdentity(claims, "Test");
-            //var principal = new ClaimsPrincipal(identity);
-
-            //var httpContext = new DefaultHttpContext();
-            //httpContext.User = principal;
-
-            _client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Test");
+            //_client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Test");
 
             // Act
             var response = await _client.GetAsync($"/api/Products/GetProducts{queryString}");

@@ -59,9 +59,12 @@ namespace Ganz.Application.Services
 
         }
 
-        public Task<ProductResponseDTO> GetByIdAsync(int id)
+        public async Task<ProductResponseDTO> GetProductByIdAsync(int id)
         {
-            throw new NotImplementedException();
+            var product = await _productRepository.GetByIdAsync(id);
+            var response = _mapper.Map<ProductResponseDTO>(product);
+
+            return response;
         }
 
         public async Task AddProductAsync(ProductRequestDTO productRequestDTO)

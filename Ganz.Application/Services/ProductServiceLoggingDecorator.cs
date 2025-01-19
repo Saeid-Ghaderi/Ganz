@@ -33,9 +33,14 @@ namespace Ganz.Application.Services
         public async Task<ProductResponseDTO> GetProductById(int id)
         {
             Console.WriteLine("Before GetProductById");
-            var product = await _inner.GetByIdAsync(id);
+            var product = await _inner.GetProductByIdAsync(id);
             Console.WriteLine("After GetProductById");
             return product;
+        }
+
+        public Task<ProductResponseDTO> GetProductByIdAsync(int id)
+        {
+            throw new NotImplementedException();
         }
 
         public Task<PaginationResponse<ProductResponseDTO>> GetProductsAsync(PaginationRequest paginationRequest)

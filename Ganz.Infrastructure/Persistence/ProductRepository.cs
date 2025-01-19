@@ -4,6 +4,7 @@ using Ganz.Domain.Enttiies;
 using Ganz.Domain.Pagination;
 using Ganz.Domain.Specifications;
 using Microsoft.EntityFrameworkCore;
+using Nest;
 using System.Text.Json;
 
 
@@ -53,7 +54,8 @@ namespace Ganz.Infrastructure.Persistence
         public async Task<Product> GetByIdAsync(int ID)
         {
             var product = await _dbContext.Products.FindAsync(ID);
-            return product!;
+
+            return product ?? throw new KeyNotFoundException("Product not found");
         }
         public async Task<int> InsertAsync(Product product)
         {

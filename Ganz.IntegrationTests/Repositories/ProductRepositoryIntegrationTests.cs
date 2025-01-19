@@ -1,8 +1,10 @@
 ﻿using Ganz.Domain;
+using Ganz.Domain.Contracts;
 using Ganz.Domain.Enttiies;
 using Ganz.Domain.Pagination;
 using Ganz.Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
+using Moq;
 
 namespace Ganz.IntegrationTests.Repositories;
 
@@ -10,6 +12,7 @@ public class ProductRepositoryIntegrationTests
 {
     private readonly ApplicationDBContext _context;
     private readonly ProductRepository _productRepository;
+    private readonly Mock<IUnitOfWork> _mockUnitOfWork;
 
     public ProductRepositoryIntegrationTests()
     {
@@ -19,19 +22,28 @@ public class ProductRepositoryIntegrationTests
 
         _context = new ApplicationDBContext(options);
 
-        SeedDatabase(_context);
+        _mockUnitOfWork = new Mock<IUnitOfWork>();
 
-        _productRepository = new ProductRepository(_context, null);
+        ClearDatabse();
+        SeedDatabase();
+
+        _productRepository = new ProductRepository(_context, _mockUnitOfWork.Object);
     }
 
-    private void SeedDatabase(ApplicationDBContext context)
+    private void ClearDatabse()
     {
-        context.Products.AddRange(
+        _context.RemoveRange(_context.Products);
+        _context.SaveChanges();
+    }
+
+    private void SeedDatabase()
+    {
+        _context.Products.AddRange(
             new Product(1, "Product1", 100, "Description1"),
             new Product(2, "Product2", 200, "Description2"),
             new Product(3, "Product3", 300, "Description3")
         );
-        context.SaveChanges();
+        _context.SaveChanges();
     }
 
     [Fact]

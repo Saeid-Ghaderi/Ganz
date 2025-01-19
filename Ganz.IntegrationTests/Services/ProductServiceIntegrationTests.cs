@@ -2,10 +2,13 @@
 using Ganz.Application.Dtos;
 using Ganz.Application.Services;
 using Ganz.Domain;
+using Ganz.Domain.Contracts;
 using Ganz.Domain.Enttiies;
 using Ganz.Domain.Pagination;
 using Ganz.Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
+using Moq;
+using Nest;
 
 namespace Ganz.IntegrationTests.Services
 {
@@ -13,15 +16,18 @@ namespace Ganz.IntegrationTests.Services
     {
         private readonly ProductService _productService;
         private readonly ApplicationDBContext _dbContext;
+        private readonly Mock<IUnitOfWork> _unitofwork;
         private readonly IMapper _mapper;
 
         public ProductServiceIntegrationTests()
         {
             var options = new DbContextOptionsBuilder<ApplicationDBContext>()
-                .UseInMemoryDatabase(databaseName: "TestDatabase")
+                .UseInMemoryDatabase(databaseName: "TestDatabase1")
                 .Options;
 
             _dbContext = new ApplicationDBContext(options);
+
+            _unitofwork = new Mock<IUnitOfWork>();
 
             var config = new MapperConfiguration(cfg =>
             {
@@ -30,9 +36,16 @@ namespace Ganz.IntegrationTests.Services
             });
             _mapper = config.CreateMapper();
 
-            _productService = new ProductService(new ProductRepository(_dbContext, null), _mapper);
+            _productService = new ProductService(new ProductRepository(_dbContext, _unitofwork.Object), _mapper);
 
+            ClearDatabse();
             SeedData();
+        }
+
+        private void ClearDatabse()
+        {
+            _dbContext.RemoveRange(_dbContext.Products);
+            _dbContext.SaveChanges();
         }
 
         private void SeedData()
