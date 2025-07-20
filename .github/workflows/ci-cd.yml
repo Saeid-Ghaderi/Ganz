@@ -28,6 +28,14 @@ jobs:
     - name: Build solution
       run: dotnet build Ganz.sln --no-restore --configuration Release
 
+    - name: Create test appsettings
+      run: |
+        echo '{
+          "ConnectionStrings": {
+            "DefaultConnection": "DataSource=:memory:"
+          }
+        }' > Ganz.IntegrationTests/appsettings.json
+
     - name: Run Unit Tests
       run: dotnet test Ganz.UnitTests/Ganz.UnitTests.csproj --no-build --configuration Release --verbosity normal
 
