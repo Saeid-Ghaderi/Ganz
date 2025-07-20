@@ -29,7 +29,7 @@ jobs:
       run: dotnet build Ganz.sln --no-restore --configuration Release
 
     - name: Run Unit Tests
-      run: dotnet test tests/Ganz.UnitTests/Ganz.UnitTests.csproj --no-build --configuration Release --verbosity normal
+      run: dotnet test Ganz.UnitTests/Ganz.UnitTests.csproj --no-build --configuration Release --verbosity normal
 
     - name: Run Integration Tests
-      run: dotnet test tests/Ganz.IntegrationTests/Ganz.IntegrationTests.csproj --no-build --configuration Release --verbosity normal
+      run: dotnet test Ganz.IntegrationTests/Ganz.IntegrationTests.csproj --no-build --configuration Release --verbosity normal
