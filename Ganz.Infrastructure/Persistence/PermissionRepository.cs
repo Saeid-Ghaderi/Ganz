@@ -1,5 +1,6 @@
 ﻿using Ganz.Domain;
 using Ganz.Domain.Contracts;
+using Ganz.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Caching.Memory;
 

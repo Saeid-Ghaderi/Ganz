@@ -5,6 +5,7 @@ using Ganz.Domain;
 using Ganz.Domain.Contracts;
 using Ganz.Domain.Enttiies;
 using Ganz.Domain.Pagination;
+using Ganz.Infrastructure.Data;
 using Ganz.Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Moq;

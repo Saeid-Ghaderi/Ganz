@@ -7,6 +7,7 @@ using Ganz.Application.Services.SMS_gRPC;
 using Ganz.Domain;
 using Ganz.Domain.Elastic;
 using Ganz.Infrastructure;
+using Ganz.Infrastructure.Data;
 using Ganz.Infrastructure.Persistence.Elastic;
 using MediatR;
 using Microsoft.EntityFrameworkCore;

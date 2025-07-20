@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using Azure.Core;
 using FluentValidation;
 using FluentValidation.Results;
 using Ganz.Application.Dtos;

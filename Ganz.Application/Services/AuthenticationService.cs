@@ -9,9 +9,9 @@ namespace Ganz.Application.Services
     public class AuthenticationService : IAuthenticationService
     {
         private readonly IUserRepository _userRepository;
-        private readonly EncryptionUtility _encryptionUtility;
+        private readonly IEncryptionUtility _encryptionUtility;
         private readonly IUnitOfWork _unitOfWork;
-        public AuthenticationService(IUserRepository userRepository, IUnitOfWork unitOfWork,EncryptionUtility encryptionUtility)
+        public AuthenticationService(IUserRepository userRepository, IUnitOfWork unitOfWork,IEncryptionUtility encryptionUtility)
         {
             _userRepository = userRepository;
             _unitOfWork = unitOfWork;

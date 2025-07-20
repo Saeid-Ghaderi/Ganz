@@ -40,6 +40,7 @@ namespace Ganz.Infrastructure
             services.AddScoped<IPermissionService, PermissionService>();
             services.AddScoped<IFeatureService, FeatureService>();
             services.AddScoped<IFeatureRepository, FeatureRepository>();
+            services.AddScoped<IEncryptionUtility, EncryptionUtility>();
 
             services.AddScoped<ProductElasticService>();
             services.AddScoped(typeof(IElasticSearchRepository<>), typeof(ElasticSearchRepository<>));
@@ -49,8 +50,6 @@ namespace Ganz.Infrastructure
 
             //services.AddScoped(typeof(IElasticSearchRepository<>), typeof(ElasticSearchRepository<>));
 
-
-            services.AddSingleton<EncryptionUtility>();
             services.Configure<Configs>(configuration.GetSection("Configs"));
 
             services.AddGrpc();

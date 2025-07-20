@@ -1,6 +1,7 @@
 ﻿using Ganz.Domain;
 using Ganz.Domain.Catalogs.Features;
 using Ganz.Infrastructure.Base;
+using Ganz.Infrastructure.Data;
 
 namespace Ganz.Infrastructure.Persistence.Catalogs.Features
 {

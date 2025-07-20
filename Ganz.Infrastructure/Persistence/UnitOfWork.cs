@@ -1,5 +1,6 @@
 ﻿using Ganz.Domain;
 using Ganz.Domain.Contracts;
+using Ganz.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 
 namespace Ganz.Infrastructure.Persistence

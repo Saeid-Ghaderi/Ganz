@@ -3,6 +3,7 @@ using Ganz.Domain.Contracts;
 using Ganz.Domain.Enttiies;
 using Ganz.Domain.Pagination;
 using Ganz.Domain.Specifications;
+using Ganz.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Nest;
 using System.Text.Json;
