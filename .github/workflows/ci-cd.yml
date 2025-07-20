@@ -19,11 +19,17 @@ jobs:
       with:
         dotnet-version: '8.0.x'
 
+    - name: Clean solution
+      run: dotnet clean Ganz.sln
+
     - name: Restore dependencies
       run: dotnet restore Ganz.sln
 
-    - name: Build project
+    - name: Build solution
       run: dotnet build Ganz.sln --no-restore --configuration Release
 
-    - name: Run tests
-      run: dotnet test Ganz.sln --no-build --verbosity normal
+    - name: Run Unit Tests
+      run: dotnet test tests/Ganz.UnitTests/Ganz.UnitTests.csproj --no-build --configuration Release --verbosity normal
+
+    - name: Run Integration Tests
+      run: dotnet test tests/Ganz.IntegrationTests/Ganz.IntegrationTests.csproj --no-build --configuration Release --verbosity normal
